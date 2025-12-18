@@ -3,149 +3,108 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NexGen AI - Premium Studio</title>
+    <title>NexGen AI - Pro Studio</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background: #0f172a; color: white; }
-        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); }
-        .gradient-text { background: linear-gradient(90deg, #38bdf8, #818cf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .btn-premium { background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); transition: all 0.3s ease; }
-        .btn-premium:active { transform: scale(0.95); }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background: #0b0f1a; color: #e2e8f0; }
+        .glass-card { background: rgba(30, 41, 59, 0.5); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.05); }
+        .category-title { color: #64748b; font-size: 0.65rem; font-weight: 800; letter-spacing: 0.15em; padding: 1.5rem 0.5rem 0.5rem; }
+        .menu-item { display: flex; align-items: center; justify-content: space-between; padding: 0.85rem 1rem; border-radius: 1rem; transition: all 0.2s; cursor: pointer; }
+        .menu-item:active { background: rgba(255, 255, 255, 0.05); transform: scale(0.98); }
+        .badge-new { background: linear-gradient(90deg, #f59e0b, #ea580c); font-size: 0.5rem; padding: 0.15rem 0.4rem; border-radius: 0.4rem; color: white; font-weight: 800; }
     </style>
 </head>
-<body class="min-h-screen">
+<body>
 
-    <div id="dashboard" class="max-w-md mx-auto px-6 py-10">
-        <header class="mb-10">
-            <h1 class="text-3xl font-800 tracking-tight">NexGen <span class="gradient-text">AI</span></h1>
-            <p class="text-gray-400 text-sm mt-2">Pilih alat cerdas untuk mulai berkarya.</p>
+    <div class="max-w-md mx-auto min-h-screen pb-10">
+        <header class="p-6 pt-10 flex justify-between items-center">
+            <div>
+                <h1 class="text-2xl font-800 tracking-tight text-white">AI Studio <span class="text-blue-500">.</span></h1>
+            </div>
+            <div class="w-10 h-10 rounded-full glass-card flex items-center justify-center border border-blue-500/30">
+                <i class="fa-solid fa-user text-xs text-blue-400"></i>
+            </div>
         </header>
 
-        <div class="grid gap-4">
-            <div onclick="openTool('Logo Architect', 'Professional minimalist logo, high-end branding, vector flat, white background, master symbol', 'blue')" 
-                 class="glass p-5 rounded-3xl flex items-center justify-between cursor-pointer hover:bg-white/5 transition">
-                <div class="flex items-center gap-4">
-                    <div class="w-12 h-12 rounded-2xl bg-blue-500/20 flex items-center justify-center">
-                        <i class="fa-solid fa-compass-drafting text-blue-400 text-xl"></i>
-                    </div>
-                    <div>
-                        <h3 class="font-bold text-sm">Logo Architect</h3>
-                        <p class="text-[10px] text-gray-400">Branding Bisnis & Ikon</p>
+        <div class="px-4">
+            <div class="category-title uppercase">Edit & Gabung</div>
+            <div class="glass-card rounded-[2rem] overflow-hidden p-2">
+                <div class="menu-item">
+                    <div class="flex items-center gap-4">
+                        <i class="fa-regular fa-images text-blue-400"></i>
+                        <span class="text-sm font-semibold">Gabung Foto</span>
                     </div>
                 </div>
-                <i class="fa-solid fa-chevron-right text-gray-600 text-xs"></i>
+                <div class="menu-item" onclick="openTool('Hapus BG', 'Remove background, clean cut, transparent background')">
+                    <div class="flex items-center gap-4">
+                        <i class="fa-solid fa-eraser text-pink-400"></i>
+                        <span class="text-sm font-semibold">Hapus BG</span>
+                    </div>
+                    <span class="badge-new">NEW</span>
+                </div>
+                <div class="menu-item">
+                    <div class="flex items-center gap-4">
+                        <i class="fa-solid fa-arrows-maximize text-emerald-400"></i>
+                        <span class="text-sm font-semibold">Perluas Foto</span>
+                    </div>
+                    <span class="badge-new">HOT</span>
+                </div>
+                <div class="menu-item">
+                    <div class="flex items-center gap-4">
+                        <i class="fa-solid fa-users-viewfinder text-purple-400"></i>
+                        <span class="text-sm font-semibold">Face Swap</span>
+                    </div>
+                </div>
             </div>
 
-            <div onclick="openTool('Art Engine', 'Masterpiece, 8k resolution, highly detailed, photorealistic, cinematic lighting, hyper-realistic art', 'purple')" 
-                 class="glass p-5 rounded-3xl flex items-center justify-between cursor-pointer hover:bg-white/5 transition">
-                <div class="flex items-center gap-4">
-                    <div class="w-12 h-12 rounded-2xl bg-purple-500/20 flex items-center justify-center">
-                        <i class="fa-solid fa-wand-magic-sparkles text-purple-400 text-xl"></i>
+            <div class="category-title uppercase">Produk & Promosi</div>
+            <div class="glass-card rounded-[2rem] overflow-hidden p-2">
+                <div class="menu-item" onclick="openTool('Logo Pro', 'Minimalist logo, flat vector, professional branding')">
+                    <div class="flex items-center gap-4">
+                        <i class="fa-solid fa-briefcase text-orange-400"></i>
+                        <span class="text-sm font-semibold">Logo Generator</span>
                     </div>
-                    <div>
-                        <h3 class="font-bold text-sm">Art Engine</h3>
-                        <p class="text-[10px] text-gray-400">Seni Kreatif & Foto Realis</p>
+                    <span class="badge-new">NEW</span>
+                </div>
+                <div class="menu-item">
+                    <div class="flex items-center gap-4">
+                        <i class="fa-solid fa-shirt text-yellow-400"></i>
+                        <span class="text-sm font-semibold">Foto Fashion</span>
                     </div>
                 </div>
-                <i class="fa-solid fa-chevron-right text-gray-600 text-xs"></i>
+                <div class="menu-item">
+                    <div class="flex items-center gap-4">
+                        <i class="fa-solid fa-box-open text-cyan-400"></i>
+                        <span class="text-sm font-semibold">Buat Mockup</span>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <div class="flex items-center gap-4">
+                        <i class="fa-solid fa-rectangle-ad text-indigo-400"></i>
+                        <span class="text-sm font-semibold">Buat Banner</span>
+                    </div>
+                </div>
             </div>
 
-            <div class="mt-8 px-2 text-[10px] font-bold text-gray-500 uppercase tracking-[0.2em]">Multimedia Suite</div>
-
-            <div class="glass p-5 rounded-3xl flex items-center justify-between opacity-50 grayscale">
-                <div class="flex items-center gap-4">
-                    <div class="w-12 h-12 rounded-2xl bg-red-500/20 flex items-center justify-center">
-                        <i class="fa-solid fa-video text-red-400 text-xl"></i>
-                    </div>
-                    <div>
-                        <h3 class="font-bold text-sm text-gray-300">VEO Video Pro</h3>
-                        <p class="text-[10px]">Tersedia Segera</p>
+            <div class="category-title uppercase">Video & Audio</div>
+            <div class="glass-card rounded-[2rem] overflow-hidden p-2">
+                <div class="menu-item">
+                    <div class="flex items-center gap-4">
+                        <i class="fa-solid fa-clapperboard text-red-500"></i>
+                        <span class="text-sm font-semibold">VEO Generator</span>
                     </div>
                 </div>
-                <span class="text-[9px] font-bold bg-white/10 px-2 py-1 rounded-md">COMING SOON</span>
+                <div class="menu-item">
+                    <div class="flex items-center gap-4">
+                        <i class="fa-solid fa-microphone-lines text-green-400"></i>
+                        <span class="text-sm font-semibold">Voice Over AI</span>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
-    <div id="workspace" class="hidden fixed inset-0 bg-[#0f172a] z-50 p-6 overflow-y-auto">
-        <div class="max-w-md mx-auto">
-            <button onclick="closeTool()" class="mb-8 w-10 h-10 rounded-full glass flex items-center justify-center">
-                <i class="fa-solid fa-arrow-left text-sm"></i>
-            </button>
-
-            <h2 id="wsTitle" class="text-2xl font-bold mb-2">Workspace</h2>
-            <p id="wsDesc" class="text-gray-400 text-sm mb-8">Jelaskan konsep yang ingin Anda buat.</p>
-
-            <div class="glass p-4 rounded-3xl mb-6">
-                <textarea id="promptInput" rows="4" 
-                    class="w-full bg-transparent border-none outline-none text-sm placeholder:text-gray-600"
-                    placeholder="Contoh: Seekor naga terbang di atas gedung Jakarta..."></textarea>
-            </div>
-
-            <button onclick="generate()" id="genBtn" class="btn-premium w-full py-4 rounded-2xl font-bold shadow-lg shadow-blue-500/20">
-                Mulai Generate
-            </button>
-
-            <div id="loading" class="hidden mt-12 text-center">
-                <div class="inline-block w-8 h-8 border-4 border-blue-500/20 border-t-blue-500 rounded-full animate-spin"></div>
-                <p class="text-xs text-gray-500 mt-4 tracking-widest uppercase">Memproses Perintah AI...</p>
-            </div>
-
-            <div id="resultArea" class="hidden mt-10">
-                <div class="relative group">
-                    <img id="outputImg" class="w-full rounded-[2.5rem] shadow-2xl border border-white/10" src="">
-                </div>
-                <a id="downloadLink" href="#" download="nexgen-ai.png" class="block text-center mt-6 text-blue-400 font-semibold text-sm">Simpan ke Galeri</a>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        let currentPromptContext = "";
-
-        function openTool(name, context, theme) {
-            document.getElementById('wsTitle').innerText = name;
-            currentPromptContext = context;
-            document.getElementById('workspace').classList.remove('hidden');
-        }
-
-        function closeTool() {
-            document.getElementById('workspace').classList.add('hidden');
-            document.getElementById('resultArea').classList.add('hidden');
-            document.getElementById('promptInput').value = "";
-        }
-
-        async function generate() {
-            const input = document.getElementById('promptInput').value;
-            if(!input) return alert("Mohon masukkan deskripsi!");
-
-            const btn = document.getElementById('genBtn');
-            const loading = document.getElementById('loading');
-            const result = document.getElementById('resultArea');
-            const img = document.getElementById('outputImg');
-
-            btn.innerText = "Processing...";
-            btn.disabled = true;
-            loading.classList.remove('hidden');
-            result.classList.add('hidden');
-
-            const finalPrompt = encodeURIComponent(input + ", " + currentPromptContext);
-            const seed = Math.floor(Math.random() * 1000000);
-            const url = `https://pollinations.ai/p/${finalPrompt}?width=1024&height=1024&seed=${seed}&model=flux`;
-
-            const testImg = new Image();
-            testImg.src = url;
-            testImg.onload = () => {
-                img.src = url;
-                document.getElementById('downloadLink').href = url;
-                loading.classList.add('hidden');
-                result.classList.remove('hidden');
-                btn.innerText = "Mulai Generate";
-                btn.disabled = false;
-            }
-        }
-    </script>
-</body>
+    </body>
 </html>
