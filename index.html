@@ -105,6 +105,49 @@
             </div>
         </div>
     </div>
+<script>
+// Ganti dengan maklumat dari Dashboard Cloudinary anda
+const cloudName = "dmmkxdqtl"; 
+const uploadPreset = "e6e0d99e-45f8-455e-828d-10ed62da8b82"; // Lihat nota di bawah cara buat ini
 
+async function processBG() {
+    const fileInput = document.getElementById('fileInput');
+    const dropArea = document.getElementById('dropArea');
+    const bgResult = document.getElementById('bgResult');
+    const noBgImg = document.getElementById('noBgImg');
+
+    if (!fileInput.files[0]) return;
+
+    // Paparan Loading
+    dropArea.innerHTML = "<div class='animate-spin h-8 w-8 border-4 border-blue-500 border-t-transparent rounded-full mx-auto mb-4'></div><p class='text-blue-400'>AI sedang memotong latar belakang...</p>";
+
+    const formData = new FormData();
+    formData.append('file', fileInput.files[0]);
+    formData.append('upload_preset', uploadPreset);
+    // Arahan untuk hapus background secara automatik
+    formData.append('background_removal', 'cloudinary_ai'); 
+
+    try {
+        const response = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
+            method: 'POST',
+            body: formData
+        });
+
+        const data = await response.json();
+
+        if (data.secure_url) {
+            // Cloudinary akan memproses gambar. Kita beri masa 2-3 saat untuk AI bekerja
+            setTimeout(() => {
+                noBgImg.src = data.secure_url.replace("/upload/", "/upload/e_background_removal/");
+                dropArea.classList.add('hidden');
+                bgResult.classList.remove('hidden');
+            }, 3000);
+        }
+    } catch (error) {
+        alert("Ops! Ada ralat. Pastikan API Key betul.");
+        console.error(error);
+    }
+}
+</script>
     </body>
 </html>
