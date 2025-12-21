@@ -52,21 +52,20 @@
 
         <div id="loader" class="hidden text-center py-10">
             <div class="inline-block w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
-            <p class="text-xs text-gray-400 mt-4 tracking-widest uppercase">AI Sedang Memotong...</p>
+            <p class="text-xs text-gray-400 mt-4 tracking-widest uppercase italic">AI sedang menghapus background...</p>
         </div>
 
         <div id="resultArea" class="hidden">
             <div class="glass p-2 rounded-[2.5rem] bg-[url('https://www.transparenttextures.com/patterns/checkerboard.png')]">
                 <img id="outputImg" class="w-full rounded-[2rem]" src="">
             </div>
-            <button onclick="downloadImage()" class="w-full mt-6 btn-primary py-4 rounded-2xl font-bold">Simpan PNG</button>
+            <p class="text-[10px] text-center text-gray-500 mt-4">Jika gambar belum muncul, tunggu 5 detik lalu klik simpan.</p>
+            <button onclick="downloadImage()" class="w-full mt-4 btn-primary py-4 rounded-2xl font-bold">Simpan PNG</button>
         </div>
     </div>
 
     <script>
-        // DATA DARI SCREENSHOT KAMU
         const cloudName = "nasrudin-cloud"; 
-        const apiKey = "111785351539844";
         const uploadPreset = "Hapus BG"; 
 
         function openTool(name) {
@@ -85,10 +84,9 @@
             const formData = new FormData();
             formData.append('file', fileInput.files[0]);
             formData.append('upload_preset', uploadPreset);
-            formData.append('api_key', apiKey);
-            formData.append('background_removal', 'cloudinary_ai'); 
 
             try {
+                // Tahap 1: Upload Biasa
                 const response = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
                     method: 'POST',
                     body: formData
@@ -97,15 +95,18 @@
                 const data = await response.json();
 
                 if (data.secure_url) {
-                    // Jeda agar AI selesai memproses
+                    // Tahap 2: Manipulasi URL untuk hapus background
+                    // Kita tambahkan perintah 'e_background_removal' di tengah URL-nya
+                    const processedUrl = data.secure_url.replace("/upload/", "/upload/e_background_removal/");
+                    
+                    // Beri waktu sebentar agar server Cloudinary memproses URL baru tersebut
                     setTimeout(() => {
-                        const finalUrl = data.secure_url.replace("/upload/", "/upload/e_background_removal/");
-                        document.getElementById('outputImg').src = finalUrl;
+                        document.getElementById('outputImg').src = processedUrl;
                         document.getElementById('loader').classList.add('hidden');
                         document.getElementById('resultArea').classList.remove('hidden');
-                    }, 5000);
+                    }, 3000);
                 } else {
-                    alert("Error: " + data.error.message);
+                    alert("Gagal: " + data.error.message);
                     location.reload();
                 }
             } catch (err) {
@@ -116,12 +117,7 @@
 
         function downloadImage() {
             const url = document.getElementById('outputImg').src;
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = "hasil-ai.png";
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
+            window.open(url, '_blank');
         }
     </script>
 </body>
