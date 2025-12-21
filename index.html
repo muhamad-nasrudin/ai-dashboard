@@ -20,107 +20,112 @@
             min-height: 100vh;
         }
         
+        .sticky-header { position: sticky; top: 0; z-index: 40; backdrop-filter: blur(10px); background: rgba(11, 15, 26, 0.8); }
+
         .card-menu { 
             background: var(--card); 
             backdrop-filter: blur(12px);
-            border-radius: 2.5rem; 
+            border-radius: 2.2rem; 
             border: 1px solid rgba(255,255,255,0.08); 
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .card-menu:active { transform: scale(0.96); background: rgba(30, 41, 59, 0.7); }
+        .card-menu:active { transform: scale(0.96); }
         
         .icon-box { 
-            width: 56px; height: 56px; border-radius: 1.25rem; 
-            display: flex; align-items: center; justify-content: center; font-size: 1.5rem; 
+            width: 50px; height: 50px; border-radius: 1.1rem; 
+            display: flex; align-items: center; justify-content: center; font-size: 1.3rem; 
         }
 
-        /* Glow Effects */
-        .glow-rose { background: rgba(244, 63, 94, 0.15); color: #fb7185; box-shadow: 0 0 20px rgba(244, 63, 94, 0.2); }
-        .glow-purple { background: rgba(168, 85, 247, 0.15); color: #c084fc; box-shadow: 0 0 20px rgba(168, 85, 247, 0.2); }
-        .glow-blue { background: rgba(14, 165, 233, 0.15); color: #38bdf8; box-shadow: 0 0 20px rgba(14, 165, 233, 0.2); }
+        .glow-rose { background: rgba(244, 63, 94, 0.15); color: #fb7185; box-shadow: 0 0 15px rgba(244, 63, 94, 0.2); }
+        .glow-purple { background: rgba(168, 85, 247, 0.15); color: #c084fc; box-shadow: 0 0 15px rgba(168, 85, 247, 0.2); }
+        .glow-blue { background: rgba(14, 165, 233, 0.15); color: #38bdf8; box-shadow: 0 0 15px rgba(14, 165, 233, 0.2); }
+        .glow-cyan { background: rgba(6, 182, 212, 0.15); color: #22d3ee; box-shadow: 0 0 15px rgba(6, 182, 212, 0.2); }
+        .glow-green { background: rgba(34, 197, 94, 0.15); color: #4ade80; box-shadow: 0 0 15px rgba(34, 197, 94, 0.2); }
         
-        /* Comparison Slider */
         .comparison-wrapper { position: relative; width: 100%; border-radius: 2.5rem; overflow: hidden; aspect-ratio: 1/1; background: #000; border: 1px solid rgba(255,255,255,0.1); }
         .img-comp-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden; z-index: 10; border-right: 2px solid white; }
         .img-comp-overlay img { width: 100%; height: 100%; object-fit: contain; }
-        .img-after { width: 100%; height: 100%; object-fit: contain; display: block; background-image: radial-gradient(#222 1px, transparent 1px); background-size: 20px 20px; }
+        .img-after { width: 100%; height: 100%; object-fit: contain; display: block; }
         
         #comp-slider { position: absolute; -webkit-appearance: none; appearance: none; width: 100%; height: 100%; background: transparent; z-index: 20; top: 0; margin: 0; cursor: col-resize; }
-        #comp-slider::-webkit-slider-thumb { -webkit-appearance: none; width: 40px; height: 40px; background: rgba(255,255,255,0.2); backdrop-filter: blur(5px); border: 2px solid white; border-radius: 50%; cursor: pointer; }
+        #comp-slider::-webkit-slider-thumb { -webkit-appearance: none; width: 40px; height: 40px; background: rgba(255,255,255,0.2); backdrop-filter: blur(5px); border: 2px solid white; border-radius: 50%; }
 
         .btn-gradient { 
             background: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%); 
-            border-radius: 2rem; 
+            border-radius: 1.8rem; 
             box-shadow: 0 10px 25px rgba(6, 182, 212, 0.3);
         }
 
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        .animate-up { animation: fadeInUp 0.6s ease-out forwards; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+        .animate-up { animation: fadeInUp 0.5s ease-out forwards; }
     </style>
 </head>
-<body class="p-6">
+<body class="pb-10">
 
-    <header class="flex justify-between items-center mb-10 animate-up">
+    <header class="sticky-header px-6 py-5 flex justify-between items-center mb-6">
         <div>
-            <h1 class="text-2xl font-800 tracking-tight text-white">NexGen AI <span class="text-cyan-400">Studio.</span></h1>
-            <p class="text-gray-500 text-[9px] font-bold tracking-[0.3em] uppercase mt-1">Advanced Neural Editor</p>
+            <h1 class="text-xl font-800 tracking-tight text-white">NexGen AI <span class="text-cyan-400">Studio.</span></h1>
+            <p class="text-[8px] text-gray-500 font-bold tracking-[0.3em] uppercase">Pro Edition 2.0</p>
         </div>
-        <div class="w-10 h-10 rounded-2xl bg-gray-800/50 border border-white/5 flex items-center justify-center">
-            <i class="fa-solid fa-sparkles text-cyan-400"></i>
+        <div class="w-9 h-9 rounded-xl bg-gray-800/50 border border-white/5 flex items-center justify-center">
+            <i class="fa-solid fa-bolt-lightning text-cyan-400 text-xs shadow-lg shadow-cyan-500/50"></i>
         </div>
     </header>
 
-    <div id="dashboard" class="grid gap-5 animate-up">
-        <div onclick="openTool('Hapus Background', 'e_background_removal')" class="card-menu p-6 flex items-center gap-5">
+    <div id="dashboard" class="px-6 grid gap-4 animate-up">
+        <div onclick="openTool('Hapus Background', 'e_background_removal')" class="card-menu p-5 flex items-center gap-4">
             <div class="icon-box glow-rose"><i class="fa-solid fa-eraser"></i></div>
-            <div class="flex-1">
-                <h3 class="font-bold text-gray-100">Hapus Background</h3>
-                <p class="text-[11px] text-gray-500 mt-1">Hapus latar belakang otomatis</p>
-            </div>
-            <i class="fa-solid fa-chevron-right text-gray-700"></i>
+            <div class="flex-1 text-sm"><h3 class="font-bold">Hapus Background</h3><p class="text-[10px] text-gray-500">Jadikan PNG transparan</p></div>
+            <i class="fa-solid fa-chevron-right text-gray-800 text-xs"></i>
         </div>
 
-        <div onclick="openTool('AI Cartoon Mode', 'e_cartoonify')" class="card-menu p-6 flex items-center gap-5">
+        <div onclick="openTool('AI Super Resolution', 'c_scale,w_2000/e_sharpen:100')" class="card-menu p-5 flex items-center gap-4">
+            <div class="icon-box glow-cyan"><i class="fa-solid fa-up-right-and-down-left-from-center"></i></div>
+            <div class="flex-1 text-sm"><h3 class="font-bold">AI Upscale HD+</h3><p class="text-[10px] text-gray-500">Ubah foto pecah jadi jernih</p></div>
+            <i class="fa-solid fa-chevron-right text-gray-800 text-xs"></i>
+        </div>
+
+        <div onclick="openTool('AI Cartoon Mode', 'e_cartoonify')" class="card-menu p-5 flex items-center gap-4">
             <div class="icon-box glow-purple"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
-            <div class="flex-1">
-                <h3 class="font-bold text-gray-100">Efek Kartun</h3>
-                <p class="text-[11px] text-gray-500 mt-1">Ubah foto menjadi seni AI</p>
-            </div>
-            <i class="fa-solid fa-chevron-right text-gray-700"></i>
+            <div class="flex-1 text-sm"><h3 class="font-bold">Efek Kartun</h3><p class="text-[10px] text-gray-500">Ubah foto jadi seni anime</p></div>
+            <i class="fa-solid fa-chevron-right text-gray-800 text-xs"></i>
         </div>
 
-        <div onclick="openTool('Ultra HD Enhance', 'e_unsharp_mask:200')" class="card-menu p-6 flex items-center gap-5">
+        <div onclick="openTool('Katalog Produk', 'e_background_removal/e_improve/e_sharpen')" class="card-menu p-5 flex items-center gap-4">
+            <div class="icon-box glow-green"><i class="fa-solid fa-bag-shopping"></i></div>
+            <div class="flex-1 text-sm"><h3 class="font-bold">Katalog Produk</h3><p class="text-[10px] text-gray-500">Khusus foto jualan online</p></div>
+            <i class="fa-solid fa-chevron-right text-gray-800 text-xs"></i>
+        </div>
+
+        <div onclick="openTool('Ultra HD Enhance', 'e_unsharp_mask:200')" class="card-menu p-5 flex items-center gap-4">
             <div class="icon-box glow-blue"><i class="fa-solid fa-bolt"></i></div>
-            <div class="flex-1">
-                <h3 class="font-bold text-gray-100">Pertajam HD</h3>
-                <p class="text-[11px] text-gray-500 mt-1">Tingkatkan detail & resolusi</p>
-            </div>
-            <i class="fa-solid fa-chevron-right text-gray-700"></i>
+            <div class="flex-1 text-sm"><h3 class="font-bold">Pertajam Foto</h3><p class="text-[10px] text-gray-500">Tingkatkan detail tekstur</p></div>
+            <i class="fa-solid fa-chevron-right text-gray-800 text-xs"></i>
         </div>
     </div>
 
     <div id="workspace" class="hidden fixed inset-0 bg-[#0b0f1a] z-50 p-6 overflow-y-auto">
-        <button onclick="location.reload()" class="w-12 h-12 bg-gray-800/50 rounded-2xl flex items-center justify-center mb-8 border border-white/5">
+        <button onclick="location.reload()" class="w-11 h-11 bg-gray-800/50 rounded-xl flex items-center justify-center mb-6 border border-white/5">
             <i class="fa-solid fa-arrow-left"></i>
         </button>
 
         <h2 id="toolTitle" class="text-2xl font-bold mb-1">Editor</h2>
-        <p class="text-xs text-cyan-500 mb-8 font-bold tracking-widest uppercase">Powered by NexGen AI</p>
+        <p class="text-[10px] text-cyan-500 mb-8 font-bold tracking-widest uppercase">NexGen Neural Engine</p>
 
-        <div id="uploadArea" class="card-menu p-12 text-center border-2 border-dashed border-white/10">
+        <div id="uploadArea" class="card-menu p-10 text-center border-2 border-dashed border-white/10">
             <input type="file" id="fileInput" class="hidden" accept="image/*" onchange="startProcess()">
             <label for="fileInput" class="cursor-pointer">
-                <div class="w-20 h-20 bg-cyan-500/10 rounded-[2rem] flex items-center justify-center mx-auto mb-6 border border-cyan-500/20">
-                    <i class="fa-solid fa-cloud-arrow-up text-3xl text-cyan-400"></i>
+                <div class="w-16 h-16 bg-cyan-500/10 rounded-2xl flex items-center justify-center mx-auto mb-5 border border-cyan-500/20">
+                    <i class="fa-solid fa-upload text-2xl text-cyan-400"></i>
                 </div>
-                <p class="font-bold text-lg">Pilih Gambar</p>
-                <p class="text-xs text-gray-500 mt-2">Mulai keajaiban AI sekarang</p>
+                <p class="font-bold text-sm">Pilih Gambar</p>
+                <p class="text-[10px] text-gray-500 mt-2 italic">Max size: 10MB</p>
             </label>
         </div>
 
         <div id="loader" class="hidden text-center py-20">
-            <div class="w-14 h-14 border-4 border-cyan-500/10 border-t-cyan-500 rounded-full animate-spin mx-auto"></div>
-            <p class="text-[10px] text-gray-500 mt-8 tracking-[0.4em] uppercase font-bold">Neural Processing...</p>
+            <div class="w-12 h-12 border-4 border-cyan-500/10 border-t-cyan-500 rounded-full animate-spin mx-auto"></div>
+            <p id="processStep" class="text-[9px] text-gray-500 mt-6 tracking-[0.4em] uppercase font-bold">Menghubungkan ke AI...</p>
         </div>
 
         <div id="resultArea" class="hidden animate-up">
@@ -128,15 +133,20 @@
                 <div id="imgOverlay" class="img-comp-overlay" style="clip-path: inset(0 50% 0 0);">
                     <img id="imgOriginal" src="">
                 </div>
-                <img id="outputImg" class="img-after" src="">
+                <img id="outputImg" class="img-after bg-[url('https://www.transparenttextures.com/patterns/checkerboard.png')]" src="">
                 <input type="range" min="0" max="100" value="50" id="comp-slider" oninput="handleSlide()">
             </div>
             
-            <p class="text-center text-[9px] text-gray-500 mt-6 tracking-widest uppercase font-bold">← Geser Slider Untuk Perbandingan →</p>
+            <p class="text-center text-[8px] text-gray-500 mt-6 tracking-widest uppercase font-bold">← Geser untuk Membandingkan →</p>
             
-            <button onclick="downloadImage()" class="w-full mt-8 btn-gradient py-5 font-bold text-sm">
-                SIMPAN KE GALERI
-            </button>
+            <div class="grid grid-cols-2 gap-3 mt-8">
+                <button onclick="downloadImage()" class="btn-gradient py-4 font-bold text-xs flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-download"></i> SIMPAN
+                </button>
+                <button onclick="location.reload()" class="bg-gray-800/50 border border-white/5 py-4 rounded-[1.8rem] font-bold text-xs">
+                    EDIT LAGI
+                </button>
+            </div>
         </div>
     </div>
 
@@ -167,6 +177,8 @@
 
             document.getElementById('uploadArea').classList.add('hidden');
             document.getElementById('loader').classList.remove('hidden');
+            
+            setTimeout(() => document.getElementById('processStep').innerText = "Menganalisis Gambar...", 2000);
 
             const formData = new FormData();
             formData.append('file', fileInput.files[0]);
@@ -180,7 +192,9 @@
                 const data = await response.json();
 
                 if (data.secure_url) {
+                    document.getElementById('processStep').innerText = "AI sedang Merender...";
                     const processedUrl = data.secure_url.replace("/upload/", `/upload/${currentEffect}/`);
+                    
                     const tempImg = new Image();
                     tempImg.src = processedUrl;
                     tempImg.onload = () => {
@@ -190,14 +204,27 @@
                     };
                 }
             } catch (err) {
-                alert("Gagal memproses!");
+                alert("Gagal memproses gambar!");
                 location.reload();
             }
         }
 
-        function downloadImage() {
-            const url = document.getElementById('outputImg').src;
-            window.open(url, '_blank');
+        async function downloadImage() {
+            const imgUrl = document.getElementById('outputImg').src;
+            try {
+                const response = await fetch(imgUrl);
+                const blob = await response.blob();
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.style.display = 'none';
+                a.href = url;
+                a.download = `NexGen-AI-${Date.now()}.png`;
+                document.body.appendChild(a);
+                a.click();
+                window.URL.revokeObjectURL(url);
+            } catch (e) {
+                window.open(imgUrl, '_blank');
+            }
         }
     </script>
 </body>
