@@ -11,15 +11,14 @@
         body { font-family: 'Plus Jakarta Sans', sans-serif; background: #0f172a; color: white; }
         .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.1); }
         .btn-primary { background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); }
-        .no-scrollbar::-webkit-scrollbar { display: none; }
     </style>
 </head>
 <body class="min-h-screen">
 
     <div id="dashboard" class="max-w-md mx-auto px-6 py-10">
         <header class="mb-8">
-            <h1 class="text-3xl font-800 tracking-tight">AI Studio<span class="text-blue-500">.</span></h1>
-            <p class="text-gray-400 text-xs mt-2 uppercase tracking-widest font-bold">Menu Profesional</p>
+            <h1 class="text-3xl font-bold tracking-tight">AI Studio<span class="text-blue-500">.</span></h1>
+            <p class="text-gray-400 text-[10px] mt-2 uppercase tracking-widest font-bold">Menu Profesional</p>
         </header>
 
         <div class="mb-4 text-[10px] font-bold text-gray-500 uppercase tracking-widest">Edit & Gabung</div>
@@ -33,28 +32,6 @@
                 </div>
                 <i class="fa-solid fa-chevron-right text-gray-600 text-xs"></i>
             </div>
-            
-            <div class="glass p-4 rounded-3xl flex items-center justify-between opacity-40">
-                <div class="flex items-center gap-4">
-                    <div class="w-10 h-10 rounded-2xl bg-blue-500/20 flex items-center justify-center text-blue-400">
-                        <i class="fa-solid fa-clone"></i>
-                    </div>
-                    <span class="text-sm font-semibold">Gabung Foto</span>
-                </div>
-                <span class="text-[9px] font-bold bg-white/10 px-2 py-1 rounded-md">SOON</span>
-            </div>
-        </div>
-
-        <div class="mb-4 text-[10px] font-bold text-gray-500 uppercase tracking-widest">Produk & Promosi</div>
-        <div class="grid gap-3">
-            <div class="glass p-4 rounded-3xl flex items-center justify-between opacity-40">
-                <div class="flex items-center gap-4">
-                    <div class="w-10 h-10 rounded-2xl bg-orange-500/20 flex items-center justify-center text-orange-400">
-                        <i class="fa-solid fa-compass-drafting"></i>
-                    </div>
-                    <span class="text-sm font-semibold">Logo Generator</span>
-                </div>
-            </div>
         </div>
     </div>
 
@@ -63,35 +40,34 @@
             <i class="fa-solid fa-arrow-left"></i>
         </button>
 
-        <h2 id="toolTitle" class="text-2xl font-bold mb-6 text-white">Tool</h2>
+        <h2 id="toolTitle" class="text-2xl font-bold mb-6">Tool</h2>
 
         <div id="uploadArea" class="glass border-2 border-dashed border-white/10 p-10 rounded-[2.5rem] text-center mb-6">
             <input type="file" id="fileInput" class="hidden" accept="image/*" onchange="startProcess()">
             <label for="fileInput" class="cursor-pointer">
                 <i class="fa-solid fa-cloud-arrow-up text-4xl text-blue-500 mb-4"></i>
                 <p class="text-sm text-gray-300">Pilih Foto dari HP</p>
-                <p class="text-[10px] text-gray-500 mt-2 italic text-blue-300">"Pilih foto wajah atau produk"</p>
             </label>
         </div>
 
         <div id="loader" class="hidden text-center py-10">
             <div class="inline-block w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
-            <p class="text-xs text-gray-400 mt-4 tracking-widest">AI SEDANG BEKERJA...</p>
+            <p class="text-xs text-gray-400 mt-4 tracking-widest uppercase">AI Sedang Memotong...</p>
         </div>
 
         <div id="resultArea" class="hidden">
             <div class="glass p-2 rounded-[2.5rem] bg-[url('https://www.transparenttextures.com/patterns/checkerboard.png')]">
                 <img id="outputImg" class="w-full rounded-[2rem]" src="">
             </div>
-            <a id="downloadBtn" href="#" download="nexgen-ai.png" class="block w-full text-center mt-6 btn-primary py-4 rounded-2xl font-bold">Simpan PNG</a>
+            <button onclick="downloadImage()" class="w-full mt-6 btn-primary py-4 rounded-2xl font-bold">Simpan PNG</button>
         </div>
     </div>
 
     <script>
-        // ISI DENGAN DATA DARI DASHBOARD KAMU
-const cloudName = "nasrudin-cloud"; 
-const uploadPreset = "Hapus BG";
-const apiKey = "111785351539844"; // <--- Tambahkan API Key dari Dashboard Cloudinary
+        // DATA DARI SCREENSHOT KAMU
+        const cloudName = "nasrudin-cloud"; 
+        const apiKey = "111785351539844";
+        const uploadPreset = "Hapus BG"; 
 
         function openTool(name) {
             document.getElementById('dashboard').classList.add('hidden');
@@ -107,12 +83,10 @@ const apiKey = "111785351539844"; // <--- Tambahkan API Key dari Dashboard Cloud
             document.getElementById('loader').classList.remove('hidden');
 
             const formData = new FormData();
-formData.append('api_key', apiKey); 
-// <--- Tambahkan baris ini di bawah upload_preset
-
             formData.append('file', fileInput.files[0]);
             formData.append('upload_preset', uploadPreset);
-            formData.append('background_removal', 'cloudinary_ai'); // AI SAKTI
+            formData.append('api_key', apiKey);
+            formData.append('background_removal', 'cloudinary_ai'); 
 
             try {
                 const response = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
@@ -123,20 +97,31 @@ formData.append('api_key', apiKey);
                 const data = await response.json();
 
                 if (data.secure_url) {
-                    // Beri waktu 3 detik untuk AI memproses background
+                    // Jeda agar AI selesai memproses
                     setTimeout(() => {
                         const finalUrl = data.secure_url.replace("/upload/", "/upload/e_background_removal/");
                         document.getElementById('outputImg').src = finalUrl;
-                        document.getElementById('downloadBtn').href = finalUrl;
                         document.getElementById('loader').classList.add('hidden');
                         document.getElementById('resultArea').classList.remove('hidden');
-                    }, 4000);
+                    }, 5000);
                 } else {
                     alert("Error: " + data.error.message);
+                    location.reload();
                 }
             } catch (err) {
-                alert("Gagal terhubung ke Cloudinary!");
+                alert("Gagal koneksi!");
+                location.reload();
             }
+        }
+
+        function downloadImage() {
+            const url = document.getElementById('outputImg').src;
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = "hasil-ai.png";
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
         }
     </script>
 </body>
