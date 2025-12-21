@@ -2,117 +2,114 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NexGen AI Studio Pro</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>NexGen AI Studio</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background: #0f172a; color: white; overflow-x: hidden; }
-        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.1); }
-        .btn-primary { background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4); }
+        :root { --bg: #1a1d24; --card: #252932; --accent: #3b82f6; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); color: white; touch-action: pan-y; }
         
-        /* Animasi Transisi */
-        .page-entry { animation: fadeInUp 0.5s ease forwards; }
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
+        .card-menu { background: var(--card); border-radius: 2rem; border: 1px solid rgba(255,255,255,0.05); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .card-menu:active { transform: scale(0.96); background: #2d323d; }
+        
+        .icon-box { width: 56px; height: 56px; border-radius: 1.25rem; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; }
+        
         /* Before/After Slider */
-        .comparison-container { position: relative; width: 100%; overflow: hidden; border-radius: 1.5rem; }
-        .image-before { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 10; }
-        .image-after { width: 100%; display: block; object-fit: cover; }
-        #slider { position: absolute; -webkit-appearance: none; appearance: none; width: 100%; height: 100%; background: transparent; outline: none; margin: 0; transition: all 0.2s; z-index: 30; cursor: col-resize; top: 0; }
-        #slider::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 4px; height: 500px; background: white; box-shadow: 0 0 10px rgba(0,0,0,0.5); }
+        .comparison-wrapper { position: relative; width: 100%; border-radius: 2rem; overflow: hidden; aspect-ratio: 1/1; background: #000; }
+        .img-comp-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden; z-index: 10; }
+        .img-comp-overlay img { width: 100%; height: 100%; object-fit: contain; }
+        .img-after { width: 100%; height: 100%; object-fit: contain; display: block; background-image: radial-gradient(#333 1px, transparent 1px); background-size: 20px 20px; }
+        
+        #comp-slider { position: absolute; -webkit-appearance: none; appearance: none; width: 100%; height: 100%; background: transparent; z-index: 20; top: 0; margin: 0; cursor: col-resize; }
+        #comp-slider::-webkit-slider-thumb { -webkit-appearance: none; width: 3px; height: 1000px; background: white; box-shadow: 0 0 15px rgba(0,0,0,0.5); }
+
+        .btn-gradient { background: linear-gradient(135deg, #0ea5e9 0%, #2563eb 100%); border-radius: 1.5rem; transition: all 0.3s; }
+        .btn-gradient:active { transform: translateY(2px); opacity: 0.9; }
+
+        @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        .animate-up { animation: slideUp 0.6s ease-out forwards; }
     </style>
 </head>
-<body class="min-h-screen">
+<body class="p-6">
 
-    <div id="dashboard" class="max-w-md mx-auto px-6 py-10 page-entry">
-        <header class="mb-10 text-center">
-            <div class="inline-block p-3 rounded-2xl bg-blue-500/10 mb-4">
-                <i class="fa-solid fa-wand-magic-sparkles text-2xl text-blue-500"></i>
-            </div>
-            <h1 class="text-3xl font-800 tracking-tight">AI Studio<span class="text-blue-500 text-5xl">.</span></h1>
-            <p class="text-gray-400 text-[10px] mt-1 uppercase tracking-widest font-bold">The Future of Mobile Editing</p>
-        </header>
+    <header class="flex justify-between items-center mb-8 animate-up">
+        <div>
+            <h1 class="text-2xl font-800 tracking-tight">NexGen AI <span class="text-blue-500">Studio.</span></h1>
+            <p class="text-gray-500 text-[10px] font-bold tracking-[0.2em] uppercase mt-1">Imagine with Tools</p>
+        </div>
+        <div class="flex gap-2">
+            <div class="w-10 h-10 glass rounded-full flex items-center justify-center bg-gray-800/50"><i class="fa-solid fa-user text-xs"></i></div>
+        </div>
+    </header>
 
-        <div class="grid gap-4">
-            <div onclick="openTool('Hapus Background', 'e_background_removal')" class="glass p-6 rounded-[2rem] flex items-center gap-5 cursor-pointer active:scale-95 transition-all border-l-4 border-l-pink-500">
-                <div class="w-14 h-14 rounded-2xl bg-pink-500/20 flex items-center justify-center text-pink-400 text-2xl shadow-lg">
-                    <i class="fa-solid fa-eraser"></i>
-                </div>
-                <div>
-                    <p class="font-bold text-base">Hapus BG</p>
-                    <p class="text-[11px] text-gray-400 mt-1">Jadikan transparan instan</p>
-                </div>
+    <div id="dashboard" class="grid gap-4 animate-up" style="animation-delay: 0.1s;">
+        <div onclick="openTool('Hapus Background', 'e_background_removal')" class="card-menu p-5 flex items-center gap-5">
+            <div class="icon-box bg-rose-500/20 text-rose-500"><i class="fa-solid fa-eraser"></i></div>
+            <div class="flex-1">
+                <h3 class="font-bold text-sm text-gray-100">Hapus Background</h3>
+                <p class="text-[11px] text-gray-500 mt-0.5">Jadikan foto transparan</p>
             </div>
+            <i class="fa-solid fa-chevron-right text-gray-700 text-xs"></i>
+        </div>
 
-            <div onclick="openTool('AI Cartoon', 'e_cartoonify')" class="glass p-6 rounded-[2rem] flex items-center gap-5 cursor-pointer active:scale-95 transition-all border-l-4 border-l-purple-500">
-                <div class="w-14 h-14 rounded-2xl bg-purple-500/20 flex items-center justify-center text-purple-400 text-2xl shadow-lg">
-                    <i class="fa-solid fa-paint-brush"></i>
-                </div>
-                <div>
-                    <p class="font-bold text-base">Efek Kartun</p>
-                    <p class="text-[11px] text-gray-400 mt-1">Ubah foto jadi karya seni</p>
-                </div>
+        <div onclick="openTool('Efek Kartun', 'e_cartoonify')" class="card-menu p-5 flex items-center gap-5">
+            <div class="icon-box bg-purple-500/20 text-purple-500"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+            <div class="flex-1">
+                <h3 class="font-bold text-sm text-gray-100">Efek Kartun</h3>
+                <p class="text-[11px] text-gray-500 mt-0.5">Gaya lukisan AI artistik</p>
             </div>
+            <i class="fa-solid fa-chevron-right text-gray-700 text-xs"></i>
+        </div>
 
-            <div onclick="openTool('Ultra Sharp HD', 'e_unsharp_mask:200')" class="glass p-6 rounded-[2rem] flex items-center gap-5 cursor-pointer active:scale-95 transition-all border-l-4 border-l-blue-500">
-                <div class="w-14 h-14 rounded-2xl bg-blue-500/20 flex items-center justify-center text-blue-400 text-2xl shadow-lg">
-                    <i class="fa-solid fa-bolt-lightning"></i>
-                </div>
-                <div>
-                    <p class="font-bold text-base">Pertajam HD</p>
-                    <p class="text-[11px] text-gray-400 mt-1">Hapus buram pada foto</p>
-                </div>
+        <div onclick="openTool('Ultra HD Sharp', 'e_unsharp_mask:200')" class="card-menu p-5 flex items-center gap-5">
+            <div class="icon-box bg-blue-500/20 text-blue-500"><i class="fa-solid fa-bolt"></i></div>
+            <div class="flex-1">
+                <h3 class="font-bold text-sm text-gray-100">Pertajam Foto HD</h3>
+                <p class="text-[11px] text-gray-500 mt-0.5">Bersihkan foto buram</p>
             </div>
+            <i class="fa-solid fa-chevron-right text-gray-700 text-xs"></i>
         </div>
     </div>
 
-    <div id="workspace" class="hidden fixed inset-0 bg-[#070b14] z-50 p-6 overflow-y-auto page-entry">
-        <div class="flex items-center justify-between mb-8">
-            <button onclick="location.reload()" class="w-10 h-10 rounded-full glass flex items-center justify-center">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
-            <h2 id="toolTitle" class="text-sm font-bold uppercase tracking-[0.2em] text-blue-400 text-center">Tool</h2>
-            <div class="w-10"></div>
-        </div>
+    <div id="workspace" class="hidden fixed inset-0 bg-[#1a1d24] z-50 p-6 overflow-y-auto">
+        <button onclick="location.reload()" class="w-12 h-12 bg-gray-800 rounded-2xl flex items-center justify-center mb-8">
+            <i class="fa-solid fa-arrow-left"></i>
+        </button>
 
-        <div id="uploadArea" class="glass border-2 border-dashed border-white/10 p-12 rounded-[3rem] text-center mb-6">
+        <h2 id="toolTitle" class="text-xl font-bold mb-2">Editor</h2>
+        <p id="toolSub" class="text-xs text-gray-500 mb-8 font-bold tracking-widest uppercase"># AI Processing</p>
+
+        <div id="uploadArea" class="card-menu p-10 text-center border-2 border-dashed border-gray-700">
             <input type="file" id="fileInput" class="hidden" accept="image/*" onchange="startProcess()">
             <label for="fileInput" class="cursor-pointer">
-                <div class="w-20 h-20 bg-blue-500/10 rounded-full flex items-center justify-center mx-auto mb-6">
-                    <i class="fa-solid fa-plus text-3xl text-blue-500"></i>
+                <div class="w-20 h-20 bg-blue-500/10 rounded-3xl flex items-center justify-center mx-auto mb-6">
+                    <i class="fa-solid fa-image text-3xl text-blue-500"></i>
                 </div>
-                <p class="font-bold text-lg mb-2">Unggah Foto</p>
-                <p class="text-xs text-gray-500 leading-relaxed">Ketuk untuk memilih foto wajah<br>atau produk dari galeri kamu</p>
+                <p class="font-bold">Pilih Foto Galeri</p>
+                <p class="text-[11px] text-gray-500 mt-2">Format JPG, PNG didukung</p>
             </label>
         </div>
 
         <div id="loader" class="hidden text-center py-20">
-            <div class="relative inline-block">
-                <div class="w-16 h-16 border-4 border-blue-500/20 rounded-full border-t-blue-500 animate-spin"></div>
-                <i class="fa-solid fa-robot absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-blue-500"></i>
-            </div>
-            <p id="loadingText" class="text-[10px] text-gray-400 mt-6 tracking-[0.3em] uppercase">Menganalisis Piksel...</p>
+            <div class="w-12 h-12 border-4 border-blue-500/20 border-t-blue-500 rounded-full animate-spin mx-auto"></div>
+            <p class="text-xs text-gray-500 mt-6 tracking-widest uppercase font-bold">AI sedang bekerja...</p>
         </div>
 
-        <div id="resultArea" class="hidden">
-            <p class="text-center text-[10px] text-gray-500 mb-4 uppercase tracking-widest italic">Geser foto untuk melihat hasil</p>
-            
-            <div class="comparison-container glass p-2">
-                <div id="beforeImgOverlay" class="image-before" style="clip-path: inset(0 50% 0 0);">
-                    <img id="imgOriginal" class="w-full h-full object-cover rounded-2xl" src="">
+        <div id="resultArea" class="hidden animate-up">
+            <div class="comparison-wrapper shadow-2xl">
+                <div id="imgOverlay" class="img-comp-overlay" style="clip-path: inset(0 50% 0 0);">
+                    <img id="imgOriginal" src="">
                 </div>
-                <img id="outputImg" class="image-after rounded-2xl bg-[url('https://www.transparenttextures.com/patterns/checkerboard.png')]" src="">
-                <input type="range" min="0" max="100" value="50" id="slider" oninput="slideComparison()">
+                <img id="outputImg" class="img-after" src="">
+                <input type="range" min="0" max="100" value="50" id="comp-slider" oninput="handleSlide()">
             </div>
-
-            <button onclick="downloadImage()" class="w-full mt-8 btn-primary py-5 rounded-[2rem] font-bold text-sm flex items-center justify-center gap-3">
-                <i class="fa-solid fa-download"></i>
-                SIMPAN KE GALERI
+            
+            <p class="text-center text-[10px] text-gray-500 mt-4 italic font-bold tracking-widest uppercase">Geser untuk membandingkan</p>
+            
+            <button onclick="downloadImage()" class="w-full mt-8 btn-gradient py-5 font-bold text-sm shadow-lg shadow-blue-500/20">
+                SIMPAN HASIL
             </button>
         </div>
     </div>
@@ -129,9 +126,9 @@
             currentEffect = effect;
         }
 
-        function slideComparison() {
-            const sliderValue = document.getElementById('slider').value;
-            document.getElementById('beforeImgOverlay').style.clipPath = `inset(0 ${100 - sliderValue}% 0 0)`;
+        function handleSlide() {
+            const val = document.getElementById('comp-slider').value;
+            document.getElementById('imgOverlay').style.clipPath = `inset(0 ${100 - val}% 0 0)`;
         }
 
         async function startProcess() {
@@ -140,9 +137,7 @@
 
             // Preview foto original
             const reader = new FileReader();
-            reader.onload = (e) => {
-                document.getElementById('imgOriginal').src = e.target.result;
-            }
+            reader.onload = (e) => document.getElementById('imgOriginal').src = e.target.result;
             reader.readAsDataURL(fileInput.files[0]);
 
             document.getElementById('uploadArea').classList.add('hidden');
@@ -162,20 +157,17 @@
                 if (data.secure_url) {
                     const processedUrl = data.secure_url.replace("/upload/", `/upload/${currentEffect}/`);
                     
-                    // Simulasi progress text
-                    setTimeout(() => document.getElementById('loadingText').innerText = "Menerapkan AI...", 1500);
-                    setTimeout(() => document.getElementById('loadingText').innerText = "Menghaluskan Detail...", 3000);
-
-                    const img = new Image();
-                    img.src = processedUrl;
-                    img.onload = () => {
+                    // Pre-load image agar tidak kedip
+                    const tempImg = new Image();
+                    tempImg.src = processedUrl;
+                    tempImg.onload = () => {
                         document.getElementById('outputImg').src = processedUrl;
                         document.getElementById('loader').classList.add('hidden');
                         document.getElementById('resultArea').classList.remove('hidden');
                     };
                 }
             } catch (err) {
-                alert("Ups! Gagal memproses.");
+                alert("Koneksi gagal!");
                 location.reload();
             }
         }
