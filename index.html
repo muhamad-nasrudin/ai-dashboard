@@ -88,9 +88,10 @@
     </div>
 
     <script>
-        // MASUKKAN DATA CLOUDINARY KAMU DI SINI
-        const cloudName = "nasrudin-cloud"; 
-        const uploadPreset = "e6e0d99e-45f8-455e-828d-10ed62da8b82";
+        // ISI DENGAN DATA DARI DASHBOARD KAMU
+const cloudName = "nasrudin-cloud"; 
+const uploadPreset = "e6e0d99e";
+const apiKey = "111785351539844"; // <--- Tambahkan API Key dari Dashboard Cloudinary
 
         function openTool(name) {
             document.getElementById('dashboard').classList.add('hidden');
@@ -106,6 +107,9 @@
             document.getElementById('loader').classList.remove('hidden');
 
             const formData = new FormData();
+formData.append('api_key', apiKey); 
+// <--- Tambahkan baris ini di bawah upload_preset
+
             formData.append('file', fileInput.files[0]);
             formData.append('upload_preset', uploadPreset);
             formData.append('background_removal', 'cloudinary_ai'); // AI SAKTI
