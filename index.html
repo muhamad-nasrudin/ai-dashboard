@@ -9,132 +9,118 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root { --bg: #05070a; --card: rgba(17, 24, 39, 0.7); --cyan: #22d3ee; }
-        body { 
-            font-family: 'Plus Jakarta Sans', sans-serif; 
-            background: #05070a; 
-            color: white; min-height: 100vh;
-        }
-        
-        /* Gradient Background Animasi */
-        .bg-glow {
-            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-            background: radial-gradient(circle at 0% 0%, #1e1b4b 0%, transparent 40%),
-                        radial-gradient(circle at 100% 100%, #164e63 0%, transparent 40%);
-            z-index: -1;
-        }
-
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background: #05070a; color: white; min-height: 100vh; padding-bottom: 50px; }
+        .bg-glow { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: radial-gradient(circle at 0% 0%, #1e1b4b 0%, transparent 40%), radial-gradient(circle at 100% 100%, #164e63 0%, transparent 40%); z-index: -1; }
         .sticky-header { position: sticky; top: 0; z-index: 50; backdrop-filter: blur(20px); background: rgba(5, 7, 10, 0.8); border-bottom: 1px solid rgba(255,255,255,0.05); }
-
-        .card-menu { 
-            background: var(--card); backdrop-filter: blur(15px);
-            border-radius: 2rem; border: 1px solid rgba(255,255,255,0.06); 
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .card-menu:active { transform: scale(0.95); }
-        
-        .icon-box { 
-            width: 48px; height: 48px; border-radius: 1rem; 
-            display: flex; align-items: center; justify-content: center; font-size: 1.2rem; 
-        }
-
-        /* Color Themes */
-        .glow-cyan { background: rgba(34, 211, 238, 0.1); color: #22d3ee; }
-        .glow-emerald { background: rgba(16, 185, 129, 0.1); color: #34d399; }
-        .glow-violet { background: rgba(139, 92, 246, 0.1); color: #a78bfa; }
-        .glow-orange { background: rgba(249, 115, 22, 0.1); color: #fb923c; }
-        
-        .comparison-wrapper { position: relative; width: 100%; border-radius: 2.2rem; overflow: hidden; aspect-ratio: 1/1; background: #000; }
+        .category-title { font-size: 10px; font-weight: 800; color: #4b5563; letter-spacing: 0.2em; text-transform: uppercase; margin: 25px 0 12px 0; }
+        .tool-item { background: var(--card); backdrop-filter: blur(15px); border-radius: 1.2rem; border: 1px solid rgba(255,255,255,0.06); padding: 14px 18px; display: flex; align-items: center; gap: 15px; margin-bottom: 10px; transition: 0.3s; }
+        .tool-item:active { transform: scale(0.97); background: rgba(31, 41, 55, 0.8); }
+        .icon-w { width: 38px; height: 38px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; }
+        .badge-new { font-size: 7px; background: #ef4444; color: white; padding: 2px 6px; border-radius: 4px; font-weight: 800; margin-left: auto; }
+        .comparison-wrapper { position: relative; width: 100%; border-radius: 2rem; overflow: hidden; aspect-ratio: 1/1; background: #000; }
         .img-comp-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden; z-index: 10; border-right: 2px solid white; }
-        
         #comp-slider { position: absolute; -webkit-appearance: none; appearance: none; width: 100%; height: 100%; background: transparent; z-index: 20; top: 0; margin: 0; }
         #comp-slider::-webkit-slider-thumb { -webkit-appearance: none; width: 40px; height: 40px; background: white; border-radius: 50%; border: 8px solid #05070a; cursor: pointer; }
-
-        .btn-main { background: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%); border-radius: 1.5rem; }
-
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        .animate-up { animation: fadeInUp 0.5s ease-out forwards; }
     </style>
 </head>
-<body class="pb-10">
+<body>
     <div class="bg-glow"></div>
 
-    <header class="sticky-header px-6 py-5 flex justify-between items-center mb-6">
+    <header class="sticky-header px-6 py-5 flex justify-between items-center mb-4">
         <div>
             <h1 class="text-xl font-800 tracking-tighter">NexGen <span class="text-cyan-400">Ultra.</span></h1>
-            <p class="text-[8px] text-gray-500 font-bold tracking-[0.3em] uppercase">Multi-Engine AI v3.0</p>
+            <p class="text-[8px] text-gray-500 font-bold tracking-[0.3em] uppercase">Sulap Foto v3.3 Lite</p>
         </div>
-        <i class="fa-solid fa-circle-nodes text-cyan-500 animate-pulse"></i>
+        <div class="flex gap-3">
+            <i class="fa-solid fa-house text-gray-400"></i>
+            <i class="fa-solid fa-gear text-gray-400"></i>
+        </div>
     </header>
 
-    <div id="dashboard" class="px-6 space-y-4 animate-up">
-        <div onclick="openTool('AI Colorizer', 'e_colorize')" class="card-menu p-5 flex items-center gap-4">
-            <div class="icon-box glow-violet"><i class="fa-solid fa-palette"></i></div>
-            <div class="flex-1 text-sm"><h3 class="font-bold">AI Colorizer</h3><p class="text-[10px] text-gray-500">Warnai foto hitam-putih otomatis</p></div>
-            <span class="text-[8px] bg-violet-500/20 text-violet-400 px-2 py-0.5 rounded-full">New</span>
+    <div id="dashboard" class="px-6">
+        
+        <h2 class="category-title">Edit & Gabung</h2>
+        <div onclick="openTool('Gabung Foto', 'e_art:incognito')" class="tool-item">
+            <div class="icon-w bg-blue-500/10 text-blue-400"><i class="fa-solid fa-images"></i></div>
+            <div class="text-sm font-semibold">Gabung Foto</div>
+        </div>
+        <div onclick="openTool('Perluas Foto', 'c_pad,w_2000,h_2000,b_gen_fill')" class="tool-item">
+            <div class="icon-w bg-orange-500/10 text-orange-400"><i class="fa-solid fa-expand"></i></div>
+            <div class="text-sm font-semibold">Perluas Foto</div>
+            <span class="badge-new">NEW</span>
+        </div>
+        <div onclick="openTool('Face Swap', 'e_replace_color:skin')" class="tool-item">
+            <div class="icon-w bg-purple-500/10 text-purple-400"><i class="fa-solid fa-user-group"></i></div>
+            <div class="text-sm font-semibold">Face Swap</div>
+            <span class="badge-new">HOT</span>
+        </div>
+        <div onclick="openTool('Hapus Background', 'e_background_removal')" class="tool-item">
+            <div class="icon-w bg-rose-500/10 text-rose-400"><i class="fa-solid fa-eraser"></i></div>
+            <div class="text-sm font-semibold">Hapus BG</div>
         </div>
 
-        <div onclick="openTool('Object Remover', 'e_gen_remove:prompt_objects')" class="card-menu p-5 flex items-center gap-4">
-            <div class="icon-box glow-orange"><i class="fa-solid fa-wand-magic"></i></div>
-            <div class="flex-1 text-sm"><h3 class="font-bold">Hapus Objek</h3><p class="text-[10px] text-gray-500">Bersihkan noda/orang mengganggu</p></div>
+        <h2 class="category-title">Produk & Promosi</h2>
+        <div onclick="openTool('Foto Produk', 'e_improve/e_sharpen')" class="tool-item">
+            <div class="icon-w bg-emerald-500/10 text-emerald-400"><i class="fa-solid fa-box"></i></div>
+            <div class="text-sm font-semibold">Foto Produk</div>
+        </div>
+        <div onclick="openTool('Foto Fashion', 'e_viesus_correct')" class="tool-item">
+            <div class="icon-w bg-pink-500/10 text-pink-400"><i class="fa-solid fa-shirt"></i></div>
+            <div class="text-sm font-semibold">Foto Fashion</div>
+        </div>
+        <div onclick="openTool('Buat Mockup', 'e_overlay:main')" class="tool-item">
+            <div class="icon-w bg-cyan-500/10 text-cyan-400"><i class="fa-solid fa-display"></i></div>
+            <div class="text-sm font-semibold">Buat Mockup</div>
+            <span class="badge-new">FREE</span>
         </div>
 
-        <div onclick="openTool('Smart Studio', 'e_background_removal/e_gradient_fade,y_0.5,b_black')" class="card-menu p-5 flex items-center gap-4">
-            <div class="icon-box glow-emerald"><i class="fa-solid fa-clapperboard"></i></div>
-            <div class="flex-1 text-sm"><h3 class="font-bold">Smart Studio</h3><p class="text-[10px] text-gray-500">Hapus BG & ganti latar estetik</p></div>
+        <h2 class="category-title">Gaya Hidup</h2>
+        <div onclick="openTool('Kamar Pas', 'e_gen_replace:to_outfit')" class="tool-item">
+            <div class="icon-w bg-yellow-500/10 text-yellow-400"><i class="fa-solid fa-person-walking-luggage"></i></div>
+            <div class="text-sm font-semibold">Kamar Pas</div>
+            <span class="badge-new">NEW</span>
+        </div>
+        <div onclick="openTool('Barbershop AI', 'e_gen_replace:to_haircut')" class="tool-item">
+            <div class="icon-w bg-red-500/10 text-red-400"><i class="fa-solid fa-scissors"></i></div>
+            <div class="text-sm font-semibold">Barbershop</div>
         </div>
 
-        <div class="grid grid-cols-2 gap-4">
-            <div onclick="openTool('Upscale HD+', 'e_upscale')" class="card-menu p-5 text-center">
-                <i class="fa-solid fa-maximize text-cyan-400 mb-2"></i>
-                <h3 class="text-[11px] font-bold">HD+ Upscale</h3>
-            </div>
-            <div onclick="openTool('Hapus BG', 'e_background_removal')" class="card-menu p-5 text-center">
-                <i class="fa-solid fa-eraser text-rose-400 mb-2"></i>
-                <h3 class="text-[11px] font-bold">Eraser</h3>
-            </div>
+        <h2 class="category-title">Desain & Ilustrasi</h2>
+        <div onclick="openTool('Desain Rumah', 'e_art:prive')" class="tool-item">
+            <div class="icon-w bg-indigo-500/10 text-indigo-400"><i class="fa-solid fa-house-chimney"></i></div>
+            <div class="text-sm font-semibold">Desain Rumah</div>
+        </div>
+        <div onclick="openTool('Art & Karikatur', 'e_cartoonify')" class="tool-item">
+            <div class="icon-w bg-amber-500/10 text-amber-400"><i class="fa-solid fa-palette"></i></div>
+            <div class="text-sm font-semibold">Art & Karikatur</div>
         </div>
     </div>
 
     <div id="workspace" class="hidden fixed inset-0 bg-[#05070a] z-50 p-6 overflow-y-auto">
-        <button onclick="location.reload()" class="w-10 h-10 bg-gray-900 rounded-xl flex items-center justify-center mb-6 border border-white/5">
+        <button onclick="location.reload()" class="w-10 h-10 bg-gray-900 rounded-xl flex items-center justify-center mb-6">
             <i class="fa-solid fa-arrow-left"></i>
         </button>
-
-        <h2 id="toolTitle" class="text-xl font-bold mb-1">Editor</h2>
-        <p class="text-[9px] text-cyan-500 mb-6 font-bold tracking-[0.2em] uppercase italic underline">AI Engine Activated</p>
-
-        <div id="uploadArea" class="card-menu p-10 text-center border-2 border-dashed border-white/5">
+        <h2 id="toolTitle" class="text-xl font-bold mb-6">Editor</h2>
+        <div id="uploadArea" class="card-menu p-12 text-center border-2 border-dashed border-white/5">
             <input type="file" id="fileInput" class="hidden" accept="image/*" onchange="startProcess()">
             <label for="fileInput" class="cursor-pointer">
-                <div class="w-16 h-16 bg-cyan-500/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                    <i class="fa-solid fa-cloud-arrow-up text-cyan-400 text-2xl"></i>
-                </div>
-                <p class="text-sm font-bold">Unggah Foto Kamu</p>
-                <p class="text-[9px] text-gray-500 mt-2 tracking-widest uppercase">Tap to Gallery</p>
+                <i class="fa-solid fa-cloud-arrow-up text-cyan-400 text-3xl mb-4"></i>
+                <p class="text-sm font-bold">Pilih Foto</p>
             </label>
         </div>
-
         <div id="loader" class="hidden text-center py-20">
             <div class="w-10 h-10 border-2 border-cyan-500/20 border-t-cyan-500 rounded-full animate-spin mx-auto"></div>
-            <p id="processStep" class="text-[8px] text-gray-500 mt-8 tracking-[0.4em] uppercase font-bold">Processing Neurals...</p>
+            <p class="text-[8px] text-gray-500 mt-6 tracking-widest uppercase font-bold">Magic Processing...</p>
         </div>
-
         <div id="resultArea" class="hidden animate-up">
-            <div class="comparison-wrapper shadow-2xl">
-                <div id="imgOverlay" class="img-comp-overlay" style="clip-path: inset(0 50% 0 0);">
-                    <img id="imgOriginal" class="w-full h-full object-contain" src="">
-                </div>
-                <img id="outputImg" class="w-full h-full object-contain bg-[url('https://www.transparenttextures.com/patterns/checkerboard.png')]" src="">
+            <div class="comparison-wrapper">
+                <div id="imgOverlay" class="img-comp-overlay" style="clip-path: inset(0 50% 0 0);"><img id="imgOriginal" src=""></div>
+                <img id="outputImg" class="w-full h-full object-contain" src="">
                 <input type="range" min="0" max="100" value="50" id="comp-slider" oninput="handleSlide()">
             </div>
-            
-            <p class="text-center text-[8px] text-gray-600 mt-6 tracking-widest uppercase font-bold">Swipe to Compare</p>
-            
             <div class="grid grid-cols-2 gap-4 mt-8">
-                <button onclick="downloadImage()" class="btn-main py-4 font-bold text-xs tracking-widest flex items-center justify-center gap-2 shadow-lg shadow-cyan-500/20">
-                    <i class="fa-solid fa-download"></i> SIMPAN
-                </button>
-                <button onclick="location.reload()" class="bg-gray-900 border border-white/5 rounded-2xl py-4 font-bold text-xs">RETRY</button>
+                <button onclick="downloadImage()" class="bg-cyan-600 py-4 rounded-xl font-bold text-xs">SIMPAN</button>
+                <button onclick="location.reload()" class="bg-gray-800 rounded-xl py-4 font-bold text-xs text-gray-400">BATAL</button>
             </div>
         </div>
     </div>
@@ -159,25 +145,17 @@
         async function startProcess() {
             const fileInput = document.getElementById('fileInput');
             if (!fileInput.files[0]) return;
-
             const reader = new FileReader();
             reader.onload = (e) => document.getElementById('imgOriginal').src = e.target.result;
             reader.readAsDataURL(fileInput.files[0]);
-
             document.getElementById('uploadArea').classList.add('hidden');
             document.getElementById('loader').classList.remove('hidden');
-
             const formData = new FormData();
             formData.append('file', fileInput.files[0]);
             formData.append('upload_preset', uploadPreset);
-
             try {
-                const response = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
-                    method: 'POST',
-                    body: formData
-                });
+                const response = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, { method: 'POST', body: formData });
                 const data = await response.json();
-
                 if (data.secure_url) {
                     const processedUrl = data.secure_url.replace("/upload/", `/upload/${currentEffect}/`);
                     const img = new Image();
@@ -188,26 +166,14 @@
                         document.getElementById('resultArea').classList.remove('hidden');
                     };
                 }
-            } catch (err) {
-                alert("AI Timeout!");
-                location.reload();
-            }
+            } catch (err) { alert("Error!"); location.reload(); }
         }
 
-        async function downloadImage() {
-            const imgUrl = document.getElementById('outputImg').src;
-            try {
-                const response = await fetch(imgUrl);
-                const blob = await response.blob();
-                const url = window.URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = `NexGen_Ultra_${Date.now()}.png`;
-                document.body.appendChild(a);
-                a.click();
-            } catch (e) {
-                window.open(imgUrl, '_blank');
-            }
+        function downloadImage() {
+            const a = document.createElement('a');
+            a.href = document.getElementById('outputImg').src;
+            a.download = 'NexGen_AI.png';
+            a.click();
         }
     </script>
 </body>
