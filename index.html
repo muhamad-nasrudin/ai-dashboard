@@ -3,100 +3,147 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NexGen AI Studio</title>
+    <title>NexGen AI Studio Pro</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background: #0f172a; color: white; }
-        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.1); }
-        .btn-primary { background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background: #0f172a; color: white; overflow-x: hidden; }
+        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.1); }
+        .btn-primary { background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4); }
+        
+        /* Animasi Transisi */
+        .page-entry { animation: fadeInUp 0.5s ease forwards; }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Before/After Slider */
+        .comparison-container { position: relative; width: 100%; overflow: hidden; border-radius: 1.5rem; }
+        .image-before { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 10; }
+        .image-after { width: 100%; display: block; object-fit: cover; }
+        #slider { position: absolute; -webkit-appearance: none; appearance: none; width: 100%; height: 100%; background: transparent; outline: none; margin: 0; transition: all 0.2s; z-index: 30; cursor: col-resize; top: 0; }
+        #slider::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 4px; height: 500px; background: white; box-shadow: 0 0 10px rgba(0,0,0,0.5); }
     </style>
 </head>
 <body class="min-h-screen">
 
-    <div id="dashboard" class="max-w-md mx-auto px-6 py-10">
-        <header class="mb-8">
-            <h1 class="text-3xl font-bold tracking-tight">AI Studio<span class="text-blue-500">.</span></h1>
-            <p class="text-gray-400 text-[10px] mt-2 uppercase tracking-widest font-bold">Smart Image Tools</p>
+    <div id="dashboard" class="max-w-md mx-auto px-6 py-10 page-entry">
+        <header class="mb-10 text-center">
+            <div class="inline-block p-3 rounded-2xl bg-blue-500/10 mb-4">
+                <i class="fa-solid fa-wand-magic-sparkles text-2xl text-blue-500"></i>
+            </div>
+            <h1 class="text-3xl font-800 tracking-tight">AI Studio<span class="text-blue-500 text-5xl">.</span></h1>
+            <p class="text-gray-400 text-[10px] mt-1 uppercase tracking-widest font-bold">The Future of Mobile Editing</p>
         </header>
 
         <div class="grid gap-4">
-            <div onclick="openTool('Hapus BG', 'e_background_removal')" class="glass p-5 rounded-3xl flex items-center gap-4 cursor-pointer active:scale-95 transition">
-                <div class="w-12 h-12 rounded-2xl bg-pink-500/20 flex items-center justify-center text-pink-400 text-xl">
+            <div onclick="openTool('Hapus Background', 'e_background_removal')" class="glass p-6 rounded-[2rem] flex items-center gap-5 cursor-pointer active:scale-95 transition-all border-l-4 border-l-pink-500">
+                <div class="w-14 h-14 rounded-2xl bg-pink-500/20 flex items-center justify-center text-pink-400 text-2xl shadow-lg">
                     <i class="fa-solid fa-eraser"></i>
                 </div>
                 <div>
-                    <p class="font-bold text-sm">Hapus Background</p>
-                    <p class="text-[10px] text-gray-500 italic">Jadikan foto transparan</p>
+                    <p class="font-bold text-base">Hapus BG</p>
+                    <p class="text-[11px] text-gray-400 mt-1">Jadikan transparan instan</p>
                 </div>
             </div>
 
-            <div onclick="openTool('Efek Kartun', 'e_cartoonify')" class="glass p-5 rounded-3xl flex items-center gap-4 cursor-pointer active:scale-95 transition">
-                <div class="w-12 h-12 rounded-2xl bg-purple-500/20 flex items-center justify-center text-purple-400 text-xl">
-                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+            <div onclick="openTool('AI Cartoon', 'e_cartoonify')" class="glass p-6 rounded-[2rem] flex items-center gap-5 cursor-pointer active:scale-95 transition-all border-l-4 border-l-purple-500">
+                <div class="w-14 h-14 rounded-2xl bg-purple-500/20 flex items-center justify-center text-purple-400 text-2xl shadow-lg">
+                    <i class="fa-solid fa-paint-brush"></i>
                 </div>
                 <div>
-                    <p class="font-bold text-sm">Ubah Jadi Kartun</p>
-                    <p class="text-[10px] text-gray-500 italic">Gaya lukisan AI artistik</p>
+                    <p class="font-bold text-base">Efek Kartun</p>
+                    <p class="text-[11px] text-gray-400 mt-1">Ubah foto jadi karya seni</p>
                 </div>
             </div>
 
-            <div onclick="openTool('Pertajam HD', 'e_unsharp_mask:200')" class="glass p-5 rounded-3xl flex items-center gap-4 cursor-pointer active:scale-95 transition">
-                <div class="w-12 h-12 rounded-2xl bg-blue-500/20 flex items-center justify-center text-blue-400 text-xl">
-                    <i class="fa-solid fa-bolt"></i>
+            <div onclick="openTool('Ultra Sharp HD', 'e_unsharp_mask:200')" class="glass p-6 rounded-[2rem] flex items-center gap-5 cursor-pointer active:scale-95 transition-all border-l-4 border-l-blue-500">
+                <div class="w-14 h-14 rounded-2xl bg-blue-500/20 flex items-center justify-center text-blue-400 text-2xl shadow-lg">
+                    <i class="fa-solid fa-bolt-lightning"></i>
                 </div>
                 <div>
-                    <p class="font-bold text-sm">Pertajam Foto HD</p>
-                    <p class="text-[10px] text-gray-500 italic">Bersihkan foto yang buram</p>
+                    <p class="font-bold text-base">Pertajam HD</p>
+                    <p class="text-[11px] text-gray-400 mt-1">Hapus buram pada foto</p>
                 </div>
             </div>
         </div>
     </div>
 
-    <div id="workspace" class="hidden fixed inset-0 bg-[#0f172a] z-50 p-6 overflow-y-auto">
-        <button onclick="location.reload()" class="mb-8 w-10 h-10 rounded-full glass flex items-center justify-center">
-            <i class="fa-solid fa-arrow-left"></i>
-        </button>
+    <div id="workspace" class="hidden fixed inset-0 bg-[#070b14] z-50 p-6 overflow-y-auto page-entry">
+        <div class="flex items-center justify-between mb-8">
+            <button onclick="location.reload()" class="w-10 h-10 rounded-full glass flex items-center justify-center">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <h2 id="toolTitle" class="text-sm font-bold uppercase tracking-[0.2em] text-blue-400 text-center">Tool</h2>
+            <div class="w-10"></div>
+        </div>
 
-        <h2 id="toolTitle" class="text-2xl font-bold mb-6 italic text-blue-400">Tool</h2>
-
-        <div id="uploadArea" class="glass border-2 border-dashed border-white/10 p-10 rounded-[2.5rem] text-center mb-6">
+        <div id="uploadArea" class="glass border-2 border-dashed border-white/10 p-12 rounded-[3rem] text-center mb-6">
             <input type="file" id="fileInput" class="hidden" accept="image/*" onchange="startProcess()">
             <label for="fileInput" class="cursor-pointer">
-                <i class="fa-solid fa-image text-4xl text-blue-500 mb-4"></i>
-                <p class="text-sm">Pilih Foto Galeri</p>
+                <div class="w-20 h-20 bg-blue-500/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <i class="fa-solid fa-plus text-3xl text-blue-500"></i>
+                </div>
+                <p class="font-bold text-lg mb-2">Unggah Foto</p>
+                <p class="text-xs text-gray-500 leading-relaxed">Ketuk untuk memilih foto wajah<br>atau produk dari galeri kamu</p>
             </label>
         </div>
 
-        <div id="loader" class="hidden text-center py-10">
-            <div class="inline-block w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
-            <p class="text-xs text-gray-400 mt-4 tracking-widest uppercase italic">AI sedang berproses...</p>
+        <div id="loader" class="hidden text-center py-20">
+            <div class="relative inline-block">
+                <div class="w-16 h-16 border-4 border-blue-500/20 rounded-full border-t-blue-500 animate-spin"></div>
+                <i class="fa-solid fa-robot absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-blue-500"></i>
+            </div>
+            <p id="loadingText" class="text-[10px] text-gray-400 mt-6 tracking-[0.3em] uppercase">Menganalisis Piksel...</p>
         </div>
 
         <div id="resultArea" class="hidden">
-            <div class="glass p-2 rounded-[2.5rem] bg-[url('https://www.transparenttextures.com/patterns/checkerboard.png')]">
-                <img id="outputImg" class="w-full rounded-[2rem]" src="">
+            <p class="text-center text-[10px] text-gray-500 mb-4 uppercase tracking-widest italic">Geser foto untuk melihat hasil</p>
+            
+            <div class="comparison-container glass p-2">
+                <div id="beforeImgOverlay" class="image-before" style="clip-path: inset(0 50% 0 0);">
+                    <img id="imgOriginal" class="w-full h-full object-cover rounded-2xl" src="">
+                </div>
+                <img id="outputImg" class="image-after rounded-2xl bg-[url('https://www.transparenttextures.com/patterns/checkerboard.png')]" src="">
+                <input type="range" min="0" max="100" value="50" id="slider" oninput="slideComparison()">
             </div>
-            <button onclick="downloadImage()" class="w-full mt-6 btn-primary py-4 rounded-2xl font-bold">Simpan Hasil</button>
+
+            <button onclick="downloadImage()" class="w-full mt-8 btn-primary py-5 rounded-[2rem] font-bold text-sm flex items-center justify-center gap-3">
+                <i class="fa-solid fa-download"></i>
+                SIMPAN KE GALERI
+            </button>
         </div>
     </div>
 
     <script>
         const cloudName = "nasrudin-cloud"; 
         const uploadPreset = "Hapus BG"; 
-        let currentEffect = ""; // Variabel penampung efek
+        let currentEffect = "";
 
         function openTool(name, effect) {
             document.getElementById('dashboard').classList.add('hidden');
             document.getElementById('workspace').classList.remove('hidden');
             document.getElementById('toolTitle').innerText = name;
-            currentEffect = effect; // Set efek sesuai tombol yang diklik
+            currentEffect = effect;
+        }
+
+        function slideComparison() {
+            const sliderValue = document.getElementById('slider').value;
+            document.getElementById('beforeImgOverlay').style.clipPath = `inset(0 ${100 - sliderValue}% 0 0)`;
         }
 
         async function startProcess() {
             const fileInput = document.getElementById('fileInput');
             if (!fileInput.files[0]) return;
+
+            // Preview foto original
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                document.getElementById('imgOriginal').src = e.target.result;
+            }
+            reader.readAsDataURL(fileInput.files[0]);
 
             document.getElementById('uploadArea').classList.add('hidden');
             document.getElementById('loader').classList.remove('hidden');
@@ -113,17 +160,22 @@
                 const data = await response.json();
 
                 if (data.secure_url) {
-                    // Manipulasi URL sesuai efek yang dipilih (currentEffect)
                     const processedUrl = data.secure_url.replace("/upload/", `/upload/${currentEffect}/`);
                     
-                    setTimeout(() => {
+                    // Simulasi progress text
+                    setTimeout(() => document.getElementById('loadingText').innerText = "Menerapkan AI...", 1500);
+                    setTimeout(() => document.getElementById('loadingText').innerText = "Menghaluskan Detail...", 3000);
+
+                    const img = new Image();
+                    img.src = processedUrl;
+                    img.onload = () => {
                         document.getElementById('outputImg').src = processedUrl;
                         document.getElementById('loader').classList.add('hidden');
                         document.getElementById('resultArea').classList.remove('hidden');
-                    }, 4000);
+                    };
                 }
             } catch (err) {
-                alert("Gagal!");
+                alert("Ups! Gagal memproses.");
                 location.reload();
             }
         }
