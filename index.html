@@ -18,19 +18,38 @@
     <div id="dashboard" class="max-w-md mx-auto px-6 py-10">
         <header class="mb-8">
             <h1 class="text-3xl font-bold tracking-tight">AI Studio<span class="text-blue-500">.</span></h1>
-            <p class="text-gray-400 text-[10px] mt-2 uppercase tracking-widest font-bold">Menu Profesional</p>
+            <p class="text-gray-400 text-[10px] mt-2 uppercase tracking-widest font-bold">Smart Image Tools</p>
         </header>
 
-        <div class="mb-4 text-[10px] font-bold text-gray-500 uppercase tracking-widest">Edit & Gabung</div>
-        <div class="grid gap-3 mb-8">
-            <div onclick="openTool('Hapus BG')" class="glass p-4 rounded-3xl flex items-center justify-between cursor-pointer active:scale-95 transition">
-                <div class="flex items-center gap-4">
-                    <div class="w-10 h-10 rounded-2xl bg-pink-500/20 flex items-center justify-center text-pink-400">
-                        <i class="fa-solid fa-eraser"></i>
-                    </div>
-                    <span class="text-sm font-semibold">Hapus Background</span>
+        <div class="grid gap-4">
+            <div onclick="openTool('Hapus BG', 'e_background_removal')" class="glass p-5 rounded-3xl flex items-center gap-4 cursor-pointer active:scale-95 transition">
+                <div class="w-12 h-12 rounded-2xl bg-pink-500/20 flex items-center justify-center text-pink-400 text-xl">
+                    <i class="fa-solid fa-eraser"></i>
                 </div>
-                <i class="fa-solid fa-chevron-right text-gray-600 text-xs"></i>
+                <div>
+                    <p class="font-bold text-sm">Hapus Background</p>
+                    <p class="text-[10px] text-gray-500 italic">Jadikan foto transparan</p>
+                </div>
+            </div>
+
+            <div onclick="openTool('Efek Kartun', 'e_cartoonify')" class="glass p-5 rounded-3xl flex items-center gap-4 cursor-pointer active:scale-95 transition">
+                <div class="w-12 h-12 rounded-2xl bg-purple-500/20 flex items-center justify-center text-purple-400 text-xl">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                </div>
+                <div>
+                    <p class="font-bold text-sm">Ubah Jadi Kartun</p>
+                    <p class="text-[10px] text-gray-500 italic">Gaya lukisan AI artistik</p>
+                </div>
+            </div>
+
+            <div onclick="openTool('Pertajam HD', 'e_unsharp_mask:200')" class="glass p-5 rounded-3xl flex items-center gap-4 cursor-pointer active:scale-95 transition">
+                <div class="w-12 h-12 rounded-2xl bg-blue-500/20 flex items-center justify-center text-blue-400 text-xl">
+                    <i class="fa-solid fa-bolt"></i>
+                </div>
+                <div>
+                    <p class="font-bold text-sm">Pertajam Foto HD</p>
+                    <p class="text-[10px] text-gray-500 italic">Bersihkan foto yang buram</p>
+                </div>
             </div>
         </div>
     </div>
@@ -40,38 +59,39 @@
             <i class="fa-solid fa-arrow-left"></i>
         </button>
 
-        <h2 id="toolTitle" class="text-2xl font-bold mb-6">Tool</h2>
+        <h2 id="toolTitle" class="text-2xl font-bold mb-6 italic text-blue-400">Tool</h2>
 
         <div id="uploadArea" class="glass border-2 border-dashed border-white/10 p-10 rounded-[2.5rem] text-center mb-6">
             <input type="file" id="fileInput" class="hidden" accept="image/*" onchange="startProcess()">
             <label for="fileInput" class="cursor-pointer">
-                <i class="fa-solid fa-cloud-arrow-up text-4xl text-blue-500 mb-4"></i>
-                <p class="text-sm text-gray-300">Pilih Foto dari HP</p>
+                <i class="fa-solid fa-image text-4xl text-blue-500 mb-4"></i>
+                <p class="text-sm">Pilih Foto Galeri</p>
             </label>
         </div>
 
         <div id="loader" class="hidden text-center py-10">
             <div class="inline-block w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
-            <p class="text-xs text-gray-400 mt-4 tracking-widest uppercase italic">AI sedang menghapus background...</p>
+            <p class="text-xs text-gray-400 mt-4 tracking-widest uppercase italic">AI sedang berproses...</p>
         </div>
 
         <div id="resultArea" class="hidden">
             <div class="glass p-2 rounded-[2.5rem] bg-[url('https://www.transparenttextures.com/patterns/checkerboard.png')]">
                 <img id="outputImg" class="w-full rounded-[2rem]" src="">
             </div>
-            <p class="text-[10px] text-center text-gray-500 mt-4">Jika gambar belum muncul, tunggu 5 detik lalu klik simpan.</p>
-            <button onclick="downloadImage()" class="w-full mt-4 btn-primary py-4 rounded-2xl font-bold">Simpan PNG</button>
+            <button onclick="downloadImage()" class="w-full mt-6 btn-primary py-4 rounded-2xl font-bold">Simpan Hasil</button>
         </div>
     </div>
 
     <script>
         const cloudName = "nasrudin-cloud"; 
         const uploadPreset = "Hapus BG"; 
+        let currentEffect = ""; // Variabel penampung efek
 
-        function openTool(name) {
+        function openTool(name, effect) {
             document.getElementById('dashboard').classList.add('hidden');
             document.getElementById('workspace').classList.remove('hidden');
             document.getElementById('toolTitle').innerText = name;
+            currentEffect = effect; // Set efek sesuai tombol yang diklik
         }
 
         async function startProcess() {
@@ -86,38 +106,30 @@
             formData.append('upload_preset', uploadPreset);
 
             try {
-                // Tahap 1: Upload Biasa
                 const response = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
                     method: 'POST',
                     body: formData
                 });
-
                 const data = await response.json();
 
                 if (data.secure_url) {
-                    // Tahap 2: Manipulasi URL untuk hapus background
-                    // Kita tambahkan perintah 'e_background_removal' di tengah URL-nya
-                    const processedUrl = data.secure_url.replace("/upload/", "/upload/e_background_removal/");
+                    // Manipulasi URL sesuai efek yang dipilih (currentEffect)
+                    const processedUrl = data.secure_url.replace("/upload/", `/upload/${currentEffect}/`);
                     
-                    // Beri waktu sebentar agar server Cloudinary memproses URL baru tersebut
                     setTimeout(() => {
                         document.getElementById('outputImg').src = processedUrl;
                         document.getElementById('loader').classList.add('hidden');
                         document.getElementById('resultArea').classList.remove('hidden');
-                    }, 3000);
-                } else {
-                    alert("Gagal: " + data.error.message);
-                    location.reload();
+                    }, 4000);
                 }
             } catch (err) {
-                alert("Gagal koneksi!");
+                alert("Gagal!");
                 location.reload();
             }
         }
 
         function downloadImage() {
-            const url = document.getElementById('outputImg').src;
-            window.open(url, '_blank');
+            window.open(document.getElementById('outputImg').src, '_blank');
         }
     </script>
 </body>
